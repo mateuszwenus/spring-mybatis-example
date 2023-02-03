@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.mateuszwenus.springmybatisexample.mapper.TodoMapper">
+    <select id="findById" resultType="Todo">
+        select id, title, text from todos where id = #{id}
+    </select>
+
+    <select id="findAll" resultType="Todo">
+        select id, title, text from todos
+    </select>
+
+    <insert id="insert">
+        insert into todos(id, title, text)
+        values (#{id}, #{title}, #{text})
+    </insert>
+
+    <update id="update">
+        update todos set
+            title = #{title},
+            text = #{text}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from todos where id = #{id}
+    </delete>
+
+    <delete id="deleteAll">
+        delete from todos
+    </delete>
+</mapper>

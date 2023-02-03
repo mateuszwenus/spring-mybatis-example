@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.github.mateuszwenus.springmybatisexample.domain"/>
+    </typeAliases>
+    <typeHandlers>
+        <typeHandler javaType="java.util.UUID" handler="com.github.mateuszwenus.springmybatisexample.handler.UUIDTypeHandler"/>
+    </typeHandlers>
+    <mappers>
+        <mapper resource="mapper/TodoMapper.xml"/>
+    </mappers>
+</configuration>
