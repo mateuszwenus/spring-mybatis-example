@@ -1,4 +1,4 @@
 package com.github.mateuszwenus.springmybatisexample.service;
 
-public record CreataTodoCmd(String title, String text) {
+public record CreateTodoCmd(String title, String text) {
 }

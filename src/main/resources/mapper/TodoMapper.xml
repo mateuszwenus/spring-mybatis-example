@@ -3,24 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.mateuszwenus.springmybatisexample.mapper.TodoMapper">
+    <select id="exists" resultType="boolean">
+        select count(1) from todos where id = #{id}
+    </select>
+
     <select id="findById" resultType="Todo">
-        select id, title, text from todos where id = #{id}
+        select id, title, text, version from todos where id = #{id}
     </select>
 
     <select id="findAll" resultType="Todo">
-        select id, title, text from todos
+        select id, title, text, version from todos
     </select>
 
     <insert id="insert">
-        insert into todos(id, title, text)
-        values (#{id}, #{title}, #{text})
+        insert into todos(id, title, text, version)
+        values (#{id}, #{title}, #{text}, #{version})
     </insert>
 
     <update id="update">
         update todos set
             title = #{title},
-            text = #{text}
+            text = #{text},
+            version = version + 1
         where id = #{id}
+        and version = #{version}
     </update>
 
     <delete id="deleteById">

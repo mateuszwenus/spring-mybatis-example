@@ -3,6 +3,7 @@ package com.github.mateuszwenus.springmybatisexample.service;
 import com.github.mateuszwenus.springmybatisexample.domain.Todo;
 import com.github.mateuszwenus.springmybatisexample.mapper.TodoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +33,7 @@ public class TodoService {
     }
 
     @Transactional
-    public Todo createTodo(CreataTodoCmd cmd) {
+    public Todo createTodo(CreateTodoCmd cmd) {
         Todo todo = new Todo(UUID.randomUUID(), cmd.title(), cmd.text());
         todoMapper.insert(todo);
         return todo;
@@ -40,7 +41,13 @@ public class TodoService {
 
     @Transactional
     public Todo updateTodo(UpdateTodoCmd cmd) {
-        todoMapper.update(cmd);
+        if (!todoMapper.exists(cmd.id())) {
+            throw new TodoNotFoundException();
+        }
+        int updateCount = todoMapper.update(cmd);
+        if (updateCount == 0) {
+            throw new OptimisticLockingFailureException("Todo " + cmd.id() + " modified after it was read");
+        }
         return findById(cmd.id());
     }
 

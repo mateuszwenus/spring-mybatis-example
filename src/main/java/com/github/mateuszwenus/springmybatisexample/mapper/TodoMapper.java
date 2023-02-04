@@ -8,10 +8,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface TodoMapper {
+    boolean exists(UUID id);
     Optional<Todo> findById(UUID id);
     List<Todo> findAll();
     void insert(Todo todo);
-    void update(UpdateTodoCmd cmd);
-    void deleteById(UUID id);
-    void deleteAll();
+    int update(UpdateTodoCmd todo);
+    int deleteById(UUID id);
+    int deleteAll();
 }

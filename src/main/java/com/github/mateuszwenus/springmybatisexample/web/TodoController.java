@@ -1,6 +1,6 @@
 package com.github.mateuszwenus.springmybatisexample.web;
 
-import com.github.mateuszwenus.springmybatisexample.service.CreataTodoCmd;
+import com.github.mateuszwenus.springmybatisexample.service.CreateTodoCmd;
 import com.github.mateuszwenus.springmybatisexample.service.TodoNotFoundException;
 import com.github.mateuszwenus.springmybatisexample.service.TodoService;
 import com.github.mateuszwenus.springmybatisexample.service.UpdateTodoCmd;
@@ -36,12 +36,12 @@ public class TodoController {
 
     @PutMapping("/todos/{id}")
     public TodoDto updateTodo(@PathVariable UUID id, @RequestBody UpdateTodoRequest req) {
-        return new TodoDto(todoService.updateTodo(new UpdateTodoCmd(id, req.getTitle(), req.getText())));
+        return new TodoDto(todoService.updateTodo(new UpdateTodoCmd(id, req.getTitle(), req.getText(), req.getVersion())));
     }
 
     @PostMapping("/todos")
     public TodoDto createTodo(@RequestBody CreateTodoRequest req) {
-        return new TodoDto(todoService.createTodo(new CreataTodoCmd(req.getTitle(), req.getText())));
+        return new TodoDto(todoService.createTodo(new CreateTodoCmd(req.getTitle(), req.getText())));
     }
 
     @ExceptionHandler

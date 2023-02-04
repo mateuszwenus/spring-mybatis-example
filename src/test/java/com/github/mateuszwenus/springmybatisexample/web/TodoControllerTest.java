@@ -1,7 +1,7 @@
 package com.github.mateuszwenus.springmybatisexample.web;
 
 import com.github.mateuszwenus.springmybatisexample.domain.Todo;
-import com.github.mateuszwenus.springmybatisexample.service.CreataTodoCmd;
+import com.github.mateuszwenus.springmybatisexample.service.CreateTodoCmd;
 import com.github.mateuszwenus.springmybatisexample.service.TodoService;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,7 +86,7 @@ public class TodoControllerTest {
 
     @Test
     public void shouldReturnListWithCreatedTodoItem() {
-        Todo todo = todoService.createTodo(new CreataTodoCmd("title", "text"));
+        Todo todo = todoService.createTodo(new CreateTodoCmd("title", "text"));
         given()
                 .accept(ContentType.JSON)
                 .log()
@@ -105,7 +105,7 @@ public class TodoControllerTest {
 
     @Test
     public void shouldReturnCreatedTodoItem() {
-        Todo todo = todoService.createTodo(new CreataTodoCmd("title", "text"));
+        Todo todo = todoService.createTodo(new CreateTodoCmd("title", "text"));
         given()
                 .accept(ContentType.JSON)
                 .log()
@@ -125,8 +125,8 @@ public class TodoControllerTest {
 
     @Test
     public void shouldUpdateTodoItem() {
-        Todo todo = todoService.createTodo(new CreataTodoCmd("title", "text"));
-        UpdateTodoRequest req = new UpdateTodoRequest("title2", "text2");
+        Todo todo = todoService.createTodo(new CreateTodoCmd("title", "text"));
+        UpdateTodoRequest req = new UpdateTodoRequest("title2", "text2", todo.version());
         given()
                 .contentType(ContentType.JSON)
                 .body(req)
@@ -149,7 +149,7 @@ public class TodoControllerTest {
     @Test
     public void shouldReturnHttp404WhenUpdatedTodoNotFound() {
         UUID id = UUID.randomUUID();
-        UpdateTodoRequest req = new UpdateTodoRequest("title2", "text2");
+        UpdateTodoRequest req = new UpdateTodoRequest("title2", "text2", 0);
         given()
                 .contentType(ContentType.JSON)
                 .body(req)
